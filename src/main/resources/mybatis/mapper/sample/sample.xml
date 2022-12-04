@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mapper DTD 선언 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.mapper.sample">
+
+    <select id="selectAllCnt" resultType="long">
+        --         select count(*) from member
+        select count(*)
+        from ex
+    </select>
+
+    <!--  insert : 파라미터를 받아온다. DTO방식으로..  -->
+    <insert id="">
+
+    </insert>
+
+    <!--  특정 id를 기준으로 update : 파라미터를 받아온다. DTO방식으로..  -->
+    <update id="">
+
+    </update>
+
+    <!--  특정 id를 기준으로 delete  -->
+    <delete id="">
+
+    </delete>
+
+</mapper>
