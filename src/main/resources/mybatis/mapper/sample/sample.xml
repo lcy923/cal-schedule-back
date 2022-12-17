@@ -11,19 +11,28 @@
         from ex
     </select>
 
-    <!--  insert : 파라미터를 받아온다. DTO방식으로..  -->
-    <insert id="">
+    <!--  insert : 파라미터를 받아온다. DTO방식(com.~~~)으로..  -->
 
+    <insert id="insertSample" parameterType="com.study.calscheduleback.sample.dto.SampleDto">
+        insert into ex values (#{id},#{name})
     </insert>
 
-    <!--  특정 id를 기준으로 update : 파라미터를 받아온다. DTO방식으로..  -->
-    <update id="">
-
+    <!--  특정 id를 기준으로 update : 파라미터를 받아온다. DTO방식으로..-->
+    <update id="updateSample" parameterType="com.study.calscheduleback.sample.dto.SampleDto">
+        update ex
+        set
+            name = #{name}
+        where
+            id = #{id}
     </update>
 
-    <!--  특정 id를 기준으로 delete  -->
-    <delete id="">
-
+    <!--  특정 id를 기준으로 delete-->
+    <delete id="deleteSample" parameterType="com.study.calscheduleback.sample.dto.SampleDto">
+        delete
+        from ex
+        where
+            id = #{id}
     </delete>
+
 
 </mapper>

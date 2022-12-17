@@ -17,4 +17,17 @@ public class SampleService {
         Object cnt = sampleDao.selectCnt(NAME_SPACE + ".selectAllCnt", "");
         return Long.parseLong(cnt.toString());
     }
+
+    public int insert(SampleDto sampleDto) {
+        return sampleDao.insert(NAME_SPACE + ".insertSample", sampleDto);
+    }
+
+    public int update(SampleDto sampleDto) {
+        return sampleDao.update(NAME_SPACE +".updateSample", sampleDto);
+    }
+
+    public int delete(SampleDto sampleDto) {
+        return sampleDao.delete(NAME_SPACE +".deleteSample", sampleDto);
+    }
+
 }
