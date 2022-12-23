@@ -1,0 +1,7 @@
+#nav-cont {
+    margin-bottom: 5px;
+}
+#nav-cont > a {
+    font-size: 25pt;
+    cursor: pointer;
+}

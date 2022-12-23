@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mapper DTD 선언 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.mapper.member">
+
+    <!--  insert : 파라미터를 받아온다. DTO방식(com.~~~)으로..  -->
+    <insert id="insertMember" parameterType="com.study.calscheduleback.member.dto.MemberRequestDto">
+        insert into todo_user (user_id, user_pw, user_name, user_email, user_status)
+        values (#{userId}, #{userPw}, #{userName}, #{userEmail}, #{userStatus})
+    </insert>
+
+    <select id="selectMember" parameterType="com.study.calscheduleback.member.dto.MemberRequestDto" resultType="com.study.calscheduleback.member.dto.MemberResponseDto">
+        select *
+        from todo_user
+        where user_id = #{userId}
+        and user_pw = #{userPw}
+    </select>
+
+</mapper>
