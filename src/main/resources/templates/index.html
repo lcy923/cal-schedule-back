@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello</title>
+</head>
+<body>
+
+    <div id="cont">
+        <form action="/member" method="get">
+            <input name="userId" type="text" />
+            <input name="userPw" type="password" />
+            <input type="submit" th:value="로그인">
+        </form>
+    </div>
+
+</body>
+</html>
