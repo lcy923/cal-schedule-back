@@ -4,9 +4,7 @@ import com.study.calscheduleback.member.dto.MemberRequestDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 화면 이동이 필요한 경우 Controller, 아니면 Rest
@@ -31,6 +29,17 @@ public class MemberController {
         model.addAttribute(userId,userPw);
 
         return "example";
+    }
+
+    @PostMapping("/member")
+    public String index(
+            MemberRequestDto memberRequestDto
+    ) {
+        System.out.println("hi");
+        log.info( "Member request dto {}", memberRequestDto.getUserid() );
+        log.info( "Member request dto {}", memberRequestDto.getUserpw() );
+
+        return "";
     }
 
 }

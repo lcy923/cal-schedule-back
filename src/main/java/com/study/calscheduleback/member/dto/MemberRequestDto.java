@@ -5,13 +5,13 @@ import lombok.Getter;
 
 @Getter
 public class MemberRequestDto {
-    private String userId;
-    private String userPw;
+    private String userid;
+    private String userpw;
 
     @Builder
-    public MemberRequestDto(String userId, String userPw) {
-        this.userId = userId;
-        this.userPw = userPw;
+    public MemberRequestDto(String userid, String userpw) {
+        this.userid = userid;
+        this.userpw = userpw;
     }
 
 }
