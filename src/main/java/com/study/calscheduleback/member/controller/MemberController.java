@@ -3,10 +3,14 @@ package com.study.calscheduleback.member.controller;
 import com.study.calscheduleback.member.dto.MemberRequestDto;
 import com.study.calscheduleback.member.dto.MemberResponseDto;
 import com.study.calscheduleback.member.service.MemberService;
+import com.study.calscheduleback.util.SessionManager;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,29 +24,20 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
+    private final SessionManager sessionManager;
+
 
     @GetMapping("/")
-    public String home() {
-        return "index";
-    }
-
-    @GetMapping("/member")
-    public String index(@RequestParam(value = "userId") String userId,
-                        @RequestParam(value = "userPw") String userPw,
-                        Model model){
-
-        log.info( "id : {}", userId);
-        log.info( "password : {}", userPw );
-
-        model.addAttribute(userId,userPw);
-
-        return "main";
+    public String home(HttpServletRequest request) {
+        MemberResponseDto session = (MemberResponseDto) sessionManager.getSession(request);
+        return session == null ? "index" : "main";
     }
 
     @PostMapping("/member")
-    public String index( MemberRequestDto memberRequestDto, Model model ) {
+    public String signIn( MemberRequestDto memberRequestDto, Model model, HttpServletResponse response ) {
         MemberResponseDto memberResponseDto = memberService.loginCheck(memberRequestDto);
         model.addAttribute("userName", memberResponseDto.getUserName());
+        sessionManager.createSession(memberResponseDto, response);
         return "main";
     }
 
@@ -54,7 +49,6 @@ public class MemberController {
     @PostMapping("/member/signup")
     public String signUp(MemberRequestDto memberRequestDto, Model model) {
         int i = memberService.signUp(memberRequestDto);
-        System.out.println("sign up result : " + i);
         return "index";
     }
 
