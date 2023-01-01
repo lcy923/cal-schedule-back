@@ -10,10 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * 화면 이동이 필요한 경우 Controller, 아니면 Rest
@@ -33,7 +31,7 @@ public class MemberController {
         return session == null ? "index" : "main";
     }
 
-    @PostMapping("/member")
+    @PostMapping("/")
     public String signIn( MemberRequestDto memberRequestDto, Model model, HttpServletResponse response ) {
         MemberResponseDto memberResponseDto = memberService.loginCheck(memberRequestDto);
         model.addAttribute("userName", memberResponseDto.getUserName());

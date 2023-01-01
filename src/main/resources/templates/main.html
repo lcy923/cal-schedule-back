@@ -7,7 +7,9 @@
 
 <div id="main-cont">
   <div th:replace="common/nav.html"></div>
-  <div th:replace="common/calendar.html"></div>
+  <form id="frm" action="/contents" method="get">
+    <div th:replace="common/calendar.html"></div>
+  </form>
 </div>
 
 </body>
