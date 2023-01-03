@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mapper DTD 선언 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mybatis.mapper.contents">
+
+    <!--  insert : 파라미터를 받아온다. DTO방식(com.~~~)으로..  -->
+    <insert id="addContent" parameterType="com.study.calscheduleback.member.dto.ContentsRequestDto">
+        insert into todo_list (user_id, content, create_date)
+        values (#{userId}, #{content}, #{createDate})
+    </insert>
+
+    <select id="getContentsList" parameterType="com.study.calscheduleback.member.dto.ContentsRequestDto" resultType="com.study.calscheduleback.member.dto.ContentsResponseDto">
+        select user_id, content, is_done
+        from todo_list
+        where user_id = #{userId}
+        order by create_date desc
+    </select>
+
+</mapper>

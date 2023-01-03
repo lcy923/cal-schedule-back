@@ -34,7 +34,8 @@ public class MemberController {
     @PostMapping("/")
     public String signIn( MemberRequestDto memberRequestDto, Model model, HttpServletResponse response ) {
         MemberResponseDto memberResponseDto = memberService.loginCheck(memberRequestDto);
-        model.addAttribute("userName", memberResponseDto.getUserName());
+        model.addAttribute("userId", memberResponseDto.getUser_id());
+        model.addAttribute("userName", memberResponseDto.getUser_name());
         sessionManager.createSession(memberResponseDto, response);
         return "main";
     }

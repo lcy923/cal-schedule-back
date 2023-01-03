@@ -12,7 +12,7 @@
     </insert>
 
     <select id="selectMember" parameterType="com.study.calscheduleback.member.dto.MemberRequestDto" resultType="com.study.calscheduleback.member.dto.MemberResponseDto">
-        select *
+        select user_id, user_name
         from todo_user
         where user_id = #{userId}
         and user_pw = #{userPw}

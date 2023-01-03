@@ -4,7 +4,7 @@
     <title>Cal Schedule</title>
     <link rel="stylesheet" href="/css/common.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <style> 
+    <style>
         #contents-cont {
             transform: translate(-50%, -50%);
             position: absolute;
@@ -33,16 +33,55 @@
         $(document).ready(function(){
             $('#cont-add-btn').click( ()=>{
                 addCont();
+                delContInputText();
             });
+
+            $('#cont-del-btn').click( ()=>{
+                delCont();
+            })
         });
 
         let addCont = () => {
-            let $li = $('<li class="li-style"><input type="checkbox"/>' + $('#content').val() +'<button>X</button></li>');
+            let contVal = $('#content').val();
+            let $li = $('<li id="cont-item" class="li-style"><input type="checkbox"/>' + contVal +'<button id="cont-del-btn" onclick="delCont(this)">X</button></li>');
             $('#todo-conts').prepend($li);
+
+            let paramObj = {};
+            paramObj.userId = $('#hiddenUserId').val();
+            paramObj.content = contVal;
+            paramObj.createDate = new Date();
+
+            console.log(paramObj)
+
+            $.ajax({
+                type : 'GET',
+                data: paramObj,
+                url : '/add/contents',
+                success : ( data ) => {
+                    console.log('data', data);
+                }
+            });
+
         }
+
+        let delCont = () => {
+            $('#cont-del-btn').parent().remove();
+        }
+
+        let delContInputText = () => {
+            console.log($('#content').val(''));
+        }
+
+
+
+
+
     </script>
 </head>
 <body>
+    <input id="hiddenUserId" type="hidden" th:value="${userId}"/>
+
+    <div th:text="${userId}"></div>
 
     <div id="contents-cont">
         <div>
@@ -51,6 +90,11 @@
         </div>
         <div id="todo-cont-wrap">
             <ul id="todo-conts">
+                <li th:each="cont : ${ contentsList}" >
+                    <input type="checkbox"/>
+                    <span th:text="${cont.getContent()  } "></span>
+                    <button id="cont-del-btn" onclick="delCont(this)">X</button></li>
+                </li>
             </ul>
         </div>
 

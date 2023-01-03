@@ -1,14 +1,12 @@
 package com.study.calscheduleback.member.repository;
 
-import com.study.calscheduleback.member.dto.MemberRequestDto;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public class MemberRepository {
+@org.springframework.stereotype.Repository
+public class Repository {
 
     @Autowired
     private SqlSessionTemplate sessionTemplate;
@@ -19,6 +17,10 @@ public class MemberRepository {
 
     public <T> T selectOne(String sqlId, Object paramObj) {
         return sessionTemplate.selectOne(sqlId, paramObj);
+    }
+
+    public <T> List<T> selectList(String sqlId, Object paramObj) {
+        return sessionTemplate.selectList(sqlId, paramObj);
     }
 
 }

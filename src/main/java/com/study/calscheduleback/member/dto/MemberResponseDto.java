@@ -6,12 +6,12 @@ import lombok.Getter;
 @Getter
 public class MemberResponseDto {
 
-    private final String userId;
-    private final String userName;
+    private final String user_id;
+    private final String user_name;
 
     @Builder
     public MemberResponseDto(String userId, String userName) {
-        this.userId = userId;
-        this.userName = userName;
+        this.user_id = userId;
+        this.user_name = userName;
     }
 }
