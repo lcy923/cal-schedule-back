@@ -19,6 +19,8 @@ public class MemberService {
         return repository.selectOne(NAME_SPACE + "selectMember", memberRequestDto);
     }
 
+
+
     public int signUp(MemberRequestDto memberRequestDto) {
         return repository.insert(NAME_SPACE + "insertMember", memberRequestDto);
     }

@@ -7,8 +7,8 @@
 
     <!--  insert : 파라미터를 받아온다. DTO방식(com.~~~)으로..  -->
     <insert id="addContent" parameterType="com.study.calscheduleback.member.dto.ContentsRequestDto">
-        insert into todo_list (user_id, content, create_date)
-        values (#{userId}, #{content}, #{createDate})
+        insert into todo_list (user_id, content, create_date, content_date)
+        values (#{userId}, #{content}, #{createDate}, #{contentDate})
     </insert>
 
     <select id="getContentsList" parameterType="com.study.calscheduleback.member.dto.ContentsRequestDto" resultType="com.study.calscheduleback.member.dto.ContentsResponseDto">

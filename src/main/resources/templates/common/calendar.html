@@ -5,13 +5,22 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
   <script>
+
+    let clickDate = '';
+
     let today = new Date();
-    var data = [
+    let data = [
       { eventName: 'Lunch Meeting w/ Mark', calendar: '', color: 'orange', createDate: new Date() },
       { eventName: 'Game vs Portalnd', calendar: '', color: 'blue' , createDate: new Date(today.setDate( today.getDate() + 1 ))},
       { eventName: 'School Play', calendar: '', color: 'yellow', createDate: new Date(today.setDate( today.getDate() +1 )) },
       { eventName: 'Free Tamale Night', calendar: '', color: 'green', createDate: new Date(today.setDate( today.getDate() +1 )) }
     ];
+
+    function parsingDate(clickedMonth) {
+      if(clickedMonth.toString().length < 2)
+        clickedMonth = "0" + clickedMonth;
+      return clickedMonth;
+    }
 
     function Calendar(selector, events) {
       this.el = document.querySelector(selector);
@@ -49,8 +58,6 @@
     $(document).ready(function() {
 
         var today = moment();
-
-
 
         Calendar.prototype.draw = function() {
           //Create Header
@@ -91,7 +98,6 @@
           var self = this;
 
           this.events.forEach(function(ev) {
-                console.log('data2 ', ev)
             ev.date = self.current.clone().date(ev.createDate.getDate());
 
           });
@@ -177,7 +183,6 @@
           //Day Number
           var number = createElement('div', 'day-number', day.format('DD'));
 
-
           //Events
           var events = createElement('div', 'day-events');
           this.drawEvents(day, events);
@@ -215,9 +220,14 @@
         }
 
         Calendar.prototype.openDay = function(el) {
+
           var details, arrow;
           var dayNumber = +el.querySelectorAll('.day-number')[0].innerText || +el.querySelectorAll('.day-number')[0].textContent;
           var day = this.current.clone().date(dayNumber);
+
+          console.log('day day :: ', day)
+          console.log('day day :: ', day['_d'])
+          clickDate = day['_d'];
 
           var currentOpened = document.querySelector('.details');
 
@@ -264,16 +274,28 @@
           }, []);
 
           this.renderEvents(todaysEvents, details);
-
           arrow.style.left = el.offsetLeft - el.parentNode.offsetLeft + 27 + 'px';
         }
 
         Calendar.prototype.renderEvents = function(events, ele) {
+
+          console.log("eve eve 1 :: ", events)
+          console.log("eve eve 2 :: ", ele)
+
           //Remove any events in the current details element
           var currentWrapper = ele.querySelector('.events');
           var wrapper = createElement('div', 'events in' + (currentWrapper ? ' new' : ''));
 
           wrapper.addEventListener('click', function() {
+
+            let clickedDate = new Date(clickDate);
+            let clickedMonth = parsingDate( clickedDate.getMonth() + 1 );
+            let frmObj = document.getElementById('frm');
+            let childInput = document.createElement('input');
+            childInput.name = 'contentDate';
+
+            childInput.value = clickedDate.getFullYear() + '-' + clickedMonth + '-' + clickedDate.getDate();
+            frmObj.appendChild(childInput);
             document.getElementById('frm').submit();
           });
 
@@ -348,7 +370,7 @@
         }
 
         window.Calendar = Calendar;
-        var calendar = new Calendar('#calendar', data);
+        let calendar = new Calendar('#calendar', data);
     })
 
 

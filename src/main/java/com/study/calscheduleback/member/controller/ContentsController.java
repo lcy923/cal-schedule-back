@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -23,10 +26,15 @@ public class ContentsController {
     @GetMapping("/contents")
     public String moveContents(MemberRequestDto memberRequestDto, Model model) {
         String userId = memberRequestDto.getUserId();
-        model.addAttribute("userId", userId);
-
         List<ContentsResponseDto> contentsList = contentsService.getContentsList(userId);
 
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dateTime = LocalDate.parse(memberRequestDto.getContentDate(), dateTimeFormatter);
+//
+        System.out.println("date time ::" + dateTime);
+
+        model.addAttribute("userId", userId);
+        model.addAttribute("contentDate", memberRequestDto.getContentDate());
         model.addAttribute("contentsList", contentsList);
 
         return "contents";

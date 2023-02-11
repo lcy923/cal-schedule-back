@@ -1,5 +1,6 @@
 package com.study.calscheduleback.member.controller;
 
+import com.study.calscheduleback.jwt.JwtProvider;
 import com.study.calscheduleback.member.dto.MemberRequestDto;
 import com.study.calscheduleback.member.dto.MemberResponseDto;
 import com.study.calscheduleback.member.service.MemberService;
@@ -23,6 +24,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final SessionManager sessionManager;
+    private final JwtProvider jwtTokenProvider;
 
 
     @GetMapping("/")
@@ -36,7 +38,11 @@ public class MemberController {
         MemberResponseDto memberResponseDto = memberService.loginCheck(memberRequestDto);
         model.addAttribute("userId", memberResponseDto.getUser_id());
         model.addAttribute("userName", memberResponseDto.getUser_name());
+
         sessionManager.createSession(memberResponseDto, response);
+
+        String token = jwtTokenProvider.createToken(memberRequestDto);
+        System.out.println("token : " + token);
         return "main";
     }
 

@@ -50,6 +50,8 @@
             paramObj.userId = $('#hiddenUserId').val();
             paramObj.content = contVal;
             paramObj.createDate = new Date();
+            paramObj.contentDate = $('#hiddenContentDate').val();
+
 
             console.log(paramObj)
 
@@ -80,6 +82,7 @@
 </head>
 <body>
     <input id="hiddenUserId" type="hidden" th:value="${userId}"/>
+    <input id="hiddenContentDate" type="text" th:value="${contentDate}">
 
     <div th:text="${userId}"></div>
 

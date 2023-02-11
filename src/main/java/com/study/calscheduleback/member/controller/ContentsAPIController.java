@@ -19,6 +19,7 @@ public class ContentsAPIController {
         System.out.println( contentsRequestDto.getUserId() );
         System.out.println( contentsRequestDto.getContent() );
         System.out.println( contentsRequestDto.getCreateDate() );
+        System.out.println( "abc " + contentsRequestDto.getContentDate() );
         contentsService.addContent(contentsRequestDto);
         return ResponseEntity.ok("ok");
     }
