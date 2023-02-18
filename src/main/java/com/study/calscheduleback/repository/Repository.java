@@ -1,4 +1,4 @@
-package com.study.calscheduleback.member.repository;
+package com.study.calscheduleback.repository;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

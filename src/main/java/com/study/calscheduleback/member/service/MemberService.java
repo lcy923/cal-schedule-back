@@ -2,7 +2,7 @@ package com.study.calscheduleback.member.service;
 
 import com.study.calscheduleback.member.dto.MemberRequestDto;
 import com.study.calscheduleback.member.dto.MemberResponseDto;
-import com.study.calscheduleback.member.repository.Repository;
+import com.study.calscheduleback.repository.Repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

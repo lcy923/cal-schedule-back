@@ -2,7 +2,7 @@ package com.study.calscheduleback.member.service;
 
 import com.study.calscheduleback.member.dto.ContentsRequestDto;
 import com.study.calscheduleback.member.dto.ContentsResponseDto;
-import com.study.calscheduleback.member.repository.Repository;
+import com.study.calscheduleback.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -9,7 +9,7 @@
   <div th:replace="common/nav.html"></div>
   <form id="frm" action="/contents" method="get">
     <div th:replace="common/calendar.html"></div>
-    <input name="userId" type="hidden" th:value="${userId}"/>
+    <input name="userId" type="text" th:value="${userId}" style="color:red;"/>
   </form>
 </div>
 

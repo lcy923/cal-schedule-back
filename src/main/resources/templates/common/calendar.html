@@ -6,15 +6,47 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
   <script>
 
+    let g_userId;
+    let g_contentDate;
+
     let clickDate = '';
 
     let today = new Date();
     let data = [
-      { eventName: 'Lunch Meeting w/ Mark', calendar: '', color: 'orange', createDate: new Date() },
-      { eventName: 'Game vs Portalnd', calendar: '', color: 'blue' , createDate: new Date(today.setDate( today.getDate() + 1 ))},
-      { eventName: 'School Play', calendar: '', color: 'yellow', createDate: new Date(today.setDate( today.getDate() +1 )) },
-      { eventName: 'Free Tamale Night', calendar: '', color: 'green', createDate: new Date(today.setDate( today.getDate() +1 )) }
+      // { eventName: 'Lunch Meeting w/ Mark', calendar: '', color: 'orange', createDate: new Date() },
+      // { eventName: 'Game vs Portalnd', calendar: '', color: 'blue' , createDate: new Date(today.setDate( today.getDate() + 1 ))},
+      // { eventName: 'School Play', calendar: '', color: 'yellow', createDate: new Date(today.setDate( today.getDate() +1 )) },
+      // { eventName: 'Free Tamale Night', calendar: '', color: 'green', createDate: new Date(today.setDate( today.getDate() +1 )) }
     ];
+
+    function spreadContents(calendar){
+      $.ajax({
+        url:"/main/calendar",
+        data: { //전송 데이터
+          "userId" : g_userId,
+          "contentDate" : g_contentDate
+        },
+        type:"GET",
+        success: function(res) {
+
+
+          // { eventName: 'Lunch Meeting w/ Mark', calendar: '', color: 'orange', createDate: new Date() },
+          console.log("data data data", data)
+          for (let i = 0; i < res.length; ++i) {
+            let tmpObj = {};
+            tmpObj.eventName = res[i].content;
+            tmpObj.calendar = '';
+            tmpObj.color = 'orange';
+            tmpObj.createDate = new Date(res[i].contentDate);
+
+            data.push(tmpObj);
+          }
+          window.Calendar = Calendar;
+          calendar = new Calendar('#calendar', data);
+        }
+      })
+
+    }
 
     function parsingDate(clickedMonth) {
       if(clickedMonth.toString().length < 2)
@@ -57,17 +89,17 @@
 
     $(document).ready(function() {
 
-        var today = moment();
+      let today = moment();
 
-        Calendar.prototype.draw = function() {
-          //Create Header
-          this.drawHeader();
+      Calendar.prototype.draw = function() {
+        //Create Header
+        this.drawHeader();
 
-          //Draw Month
-          this.drawMonth();
+        //Draw Month
+        this.drawMonth();
 
-          this.drawLegend();
-        }
+        this.drawLegend();
+      }
 
         Calendar.prototype.drawHeader = function() {
           var self = this;
@@ -219,6 +251,7 @@
           return classes.join(' ');
         }
 
+        this.self = this;
         Calendar.prototype.openDay = function(el) {
 
           var details, arrow;
@@ -226,8 +259,13 @@
           var day = this.current.clone().date(dayNumber);
 
           console.log('day day :: ', day)
+          console.log('day day :: ', new Date(day).getMonth() + 1)
           console.log('day day :: ', day['_d'])
+
           clickDate = day['_d'];
+          let curPageDate = new Date(day);
+          document.getElementById('calHiddenDate').value = curPageDate.getFullYear() + '' + (curPageDate.getMonth() + 1)
+
 
           var currentOpened = document.querySelector('.details');
 
@@ -294,7 +332,7 @@
             let childInput = document.createElement('input');
             childInput.name = 'contentDate';
 
-            childInput.value = clickedDate.getFullYear() + '-' + clickedMonth + '-' + clickedDate.getDate();
+            childInput.value = clickedDate.getFullYear() + '-' + clickedMonth + '-' + parsingDate(clickedDate.getDate());
             frmObj.appendChild(childInput);
             document.getElementById('frm').submit();
           });
@@ -371,6 +409,13 @@
 
         window.Calendar = Calendar;
         let calendar = new Calendar('#calendar', data);
+
+
+      g_userId = document.getElementById("calHiddenUserId").value;
+      let curPageDate = new Date(calendar.current['_d']);
+      g_contentDate = '';
+      g_contentDate = '' + curPageDate.getFullYear() + ( parsingDate( curPageDate.getMonth() + 1 ) );
+      spreadContents(calendar);
     })
 
 
@@ -764,6 +809,8 @@
 </head>
 <body>
 
+<input id="calHiddenUserId" type="text" th:value="${userId}" style="color:red;">
+<input id="calHiddenDate" type="text" style="color:red;">
   <div id="calendar"></div>
 
 </body>
